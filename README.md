@@ -1,3 +1,14 @@
+# samueldcs/gilded-rose
+
+A fork of [Sandro Mancuso's solution to the Gilded Rose kata](https://github.com/sandromancuso/Gilded-Rose-Kata).
+
+My solution is very similar to his, the difference being I enforced some degree of immutability by not using setters. Some newer Java features have been employed (namely the Streams API) and part
+of the tests were simplified.
+
+Below is the original content of Sandro's README.
+
+--- 
+
 Original source in C#: https://github.com/NotMyself/GildedRose
 Java version copied from: https://github.com/wouterla/GildedRose
 Ruby version: https://github.com/professor/GildedRose
