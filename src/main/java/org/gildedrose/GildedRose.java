@@ -6,6 +6,8 @@ import org.gildedrose.sellincontrol.SellInControl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 public class GildedRose {
 	
 	private final QualityControlFactory qualityControlFactory;
@@ -21,7 +23,7 @@ public class GildedRose {
 				.stream()
 				.map(this::updateQuality)
 				.map(this::updateSellIn)
-				.collect(Collectors.toUnmodifiableList());
+				.collect(toUnmodifiableList());
 	}
 	
 	private Item updateQuality(Item item) {

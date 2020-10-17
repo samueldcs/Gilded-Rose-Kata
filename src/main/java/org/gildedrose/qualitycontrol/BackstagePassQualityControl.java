@@ -33,7 +33,8 @@ public class BackstagePassQualityControl implements QualityControl {
 	private int extraQualityFor(Item backstagePass) {
 		if (concertIsWithinSixAndTenDays(backstagePass)) {
 			return EXTRA_QUALITY_HIKE;
-		} else if (concertIsInFiveOrLessDays(backstagePass)) {
+		}
+		if (concertIsInFiveOrLessDays(backstagePass)) {
 			return DOUBLE_EXTRA_QUALITY_HIKE;
 		}
 		return NO_EXTRA_QUALITY_HIKE;

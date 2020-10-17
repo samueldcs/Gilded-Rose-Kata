@@ -14,10 +14,14 @@ public class ConjuredQualityControl implements QualityControl {
 	}
 	
 	private int qualityDropFor(Item item) {
-		return item.getQuality() - CONJURED_QUALITY_DROP > 0
+		return shouldApplyConjuredQualityDrop(item)
 				? CONJURED_QUALITY_DROP
 				: item.getQuality();
 		
+	}
+	
+	private boolean shouldApplyConjuredQualityDrop(final Item item) {
+		return item.getQuality() - CONJURED_QUALITY_DROP > 0;
 	}
 	
 }

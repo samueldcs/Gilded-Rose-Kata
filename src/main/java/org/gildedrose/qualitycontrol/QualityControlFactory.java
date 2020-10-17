@@ -24,11 +24,10 @@ public class QualityControlFactory {
 		}
 		
 		public static QualityControl qualityControlFor(Item item) {
-			for (ItemQualityControl itemQualityControl : ItemQualityControl.values()) {
+			for (ItemQualityControl itemQualityControl : ItemQualityControl.values())
 				if (itemQualityControl.itemName.equals(item.getName())) {
 					return itemQualityControl.qualityControl;
 				}
-			}
 			return new DefaultQualityControl();
 		}
 	}

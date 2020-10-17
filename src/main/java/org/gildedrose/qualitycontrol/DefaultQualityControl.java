@@ -5,6 +5,8 @@ import org.gildedrose.builder.ItemBuilder;
 
 public class DefaultQualityControl implements QualityControl {
 	
+	private static final int DOUBLE_QUALITY_DROP = DEFAULT_QUALITY_DROP * 2;
+	
 	public Item updateQuality(Item item) {
 		return ItemBuilder.from(item)
 				.withQuality(item.getQuality() - qualityDropFor(item))
@@ -12,16 +14,18 @@ public class DefaultQualityControl implements QualityControl {
 	}
 	
 	private int qualityDropFor(Item item) {
-		int defaultQualityDrop = defaultQualityDropFor(item);
-		
-		return item.getQuality() - defaultQualityDrop >= 0
-				? defaultQualityDrop
+		return shouldDropQuality(item)
+				? defaultQualityDropFor(item)
 				: item.getQuality();
+	}
+	
+	private boolean shouldDropQuality(final Item item) {
+		return item.getQuality() - defaultQualityDropFor(item) >= 0;
 	}
 	
 	private int defaultQualityDropFor(Item item) {
 		return item.getSellIn() < 0
-				? DEFAULT_QUALITY_DROP * 2
+				? DOUBLE_QUALITY_DROP
 				: DEFAULT_QUALITY_DROP;
 	}
 	

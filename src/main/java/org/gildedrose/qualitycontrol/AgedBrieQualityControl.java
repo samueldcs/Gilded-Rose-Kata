@@ -14,7 +14,11 @@ public class AgedBrieQualityControl implements QualityControl {
 	}
 	
 	private int newQualityFor(Item item) {
-		return min(item.getQuality() + DEFAULT_QUALITY_HIKE, MAX_QUALITY_ALLOWED);
+		return min(getQuality(item), MAX_QUALITY_ALLOWED);
+	}
+	
+	private int getQuality(final Item item) {
+		return item.getQuality() + DEFAULT_QUALITY_HIKE;
 	}
 	
 }
