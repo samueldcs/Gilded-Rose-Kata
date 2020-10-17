@@ -5,7 +5,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import org.gildedrose.Item;
-import org.gildedrose.qualitycontrol.SulfurasQualityControl;
 import org.junit.Test;
 
 public class SulfurasQualityControlTest {
@@ -19,7 +18,7 @@ public class SulfurasQualityControlTest {
 								.withQuality(20)
 								.withSellIn(10).build();
 		
-		sulfurasQualityControl.updateQualityFor(sulfuras);
+		sulfurasQualityControl.updateQuality(sulfuras);
 		
 		assertThat(sulfuras.getQuality(), is(20));
 	}

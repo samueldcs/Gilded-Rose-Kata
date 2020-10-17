@@ -1,35 +1,37 @@
 package org.gildedrose;
 
-import java.util.List;
-
-import org.gildedrose.qualitycontrol.QualityControl;
 import org.gildedrose.qualitycontrol.QualityControlFactory;
 import org.gildedrose.sellincontrol.SellInControl;
 
-public class GildedRose {
+import java.util.List;
+import java.util.stream.Collectors;
 
-	private QualityControlFactory qualityControlFactory;
-	private SellInControl sellInControl;
+public class GildedRose {
+	
+	private final QualityControlFactory qualityControlFactory;
+	private final SellInControl sellInControl;
 	
 	public GildedRose(QualityControlFactory qualityControl, SellInControl sellInControl) {
 		this.qualityControlFactory = qualityControl;
 		this.sellInControl = sellInControl;
 	}
-
-	public void updateQualityFor(List<Item> items) {
-		for (Item item : items) {
-			udpateSellInFor(item);
-			updateQualityFor(item);
-		}
+	
+	public List<Item> updateQuality(final List<Item> itens) {
+		return itens
+				.stream()
+				.map(this::updateQuality)
+				.map(this::updateSellIn)
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
-	private void updateQualityFor(Item item) {
-		QualityControl qualityControl = qualityControlFactory.qualityControlFor(item);
-		qualityControl.updateQualityFor(item);
+	private Item updateQuality(Item item) {
+		return qualityControlFactory
+				.qualityControlFor(item)
+				.updateQuality(item);
 	}
-
-	private void udpateSellInFor(Item item) {
-		sellInControl.updateSellInFor(item);
+	
+	private Item updateSellIn(Item item) {
+		return sellInControl.updateSellInFor(item);
 	}
-
+	
 }

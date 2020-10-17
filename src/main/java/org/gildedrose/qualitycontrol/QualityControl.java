@@ -8,6 +8,6 @@ public interface QualityControl {
 	int DEFAULT_QUALITY_HIKE = 1;
 	int DEFAULT_QUALITY_DROP = 1;
 	
-	void updateQualityFor(Item item);
-
+	Item updateQuality(Item item);
+	
 }

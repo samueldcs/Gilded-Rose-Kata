@@ -1,13 +1,7 @@
 package org.gildedrose.qualitycontrol;
 
-import static org.gildedrose.builder.ItemBuilder.anItem;
 import static org.gildedrose.qualitycontrol.QualityControlFactory.BACKSTAGE_PASS_ITEM_NAME;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
 import org.gildedrose.Item;
-import org.gildedrose.qualitycontrol.BackstagePassQualityControl;
-import org.junit.Before;
 import org.junit.Test;
 
 public class BackstagePassQualityControlTest {
@@ -17,66 +11,41 @@ public class BackstagePassQualityControlTest {
 	private static final int FIVE_DAYS = 5;
 	private static final int ZERO_DAYS = 0;
 	
-	private BackstagePassQualityControl qualityControl;
-	private Item backstagePass;
-
-	@Before
-	public void initialise() {
-		qualityControl = new BackstagePassQualityControl();
-		backstagePass = anItem()
-				.withName(BACKSTAGE_PASS_ITEM_NAME)
-				.build();
-	}
+	private final QualityControl qualityControl = new BackstagePassQualityControl();
+	private final QualityControlAssertionFactory assertionFactory = new QualityControlAssertionFactory(qualityControl);
 	
 	@Test public void
 	shouldIncreaseQualityAsDaysGoBy() {
-		backstagePass.setSellIn(TWENTY_DAYS);
-		backstagePass.setQuality(10);
-
-		qualityControl.updateQualityFor(backstagePass);
-		
-		assertThat(backstagePass.getQuality(), is(11));
+		assertionFactory
+				.update(new Item(BACKSTAGE_PASS_ITEM_NAME, TWENTY_DAYS, 10))
+				.andExpectQualityToBe(11);
 	}
 	
 	@Test public void
 	shouldIncreaseQualityByTwoWhenNeedsToBeSoldInTenDaysOrLess() {
-		backstagePass.setSellIn(TEN_DAYS);
-		backstagePass.setQuality(10);
-		
-		qualityControl.updateQualityFor(backstagePass);
-		
-		assertThat(backstagePass.getQuality(), is(12));
+		assertionFactory
+				.update(new Item(BACKSTAGE_PASS_ITEM_NAME, TEN_DAYS, 10))
+				.andExpectQualityToBe(12);
 	}
 	
 	@Test public void
 	shouldIncreaseQualityByThreeWhenNeedsToBeSoldInFiveDaysOrLess() {
-		backstagePass.setSellIn(FIVE_DAYS);
-		backstagePass.setQuality(10);
-		
-		qualityControl.updateQualityFor(backstagePass);
-		
-		assertThat(backstagePass.getQuality(), is(13));
+		assertionFactory
+				.update(new Item(BACKSTAGE_PASS_ITEM_NAME, FIVE_DAYS, 10))
+				.andExpectQualityToBe(13);
 	}
 	
 	@Test public void
 	shouldSetQualityToZeroAfterConcert() {
-		backstagePass.setSellIn(ZERO_DAYS);
-		backstagePass.setQuality(10);
-		
-		qualityControl.updateQualityFor(backstagePass);
-		
-		assertThat(backstagePass.getQuality(), is(0));
+		assertionFactory
+				.update(new Item(BACKSTAGE_PASS_ITEM_NAME, ZERO_DAYS, 10))
+				.andExpectQualityToBe(0);
 	}
 	
 	@Test public void
 	shouldNeverIncreaseQualityToMoreThanFifty() {
-		backstagePass.setSellIn(FIVE_DAYS);
-		backstagePass.setQuality(50);
-		
-		qualityControl.updateQualityFor(backstagePass);
-		
-		assertThat(backstagePass.getQuality(), is(50));
+		assertionFactory
+				.update(new Item(BACKSTAGE_PASS_ITEM_NAME, FIVE_DAYS, 50))
+				.andExpectQualityToBe(50);
 	}
-	
-	
 }

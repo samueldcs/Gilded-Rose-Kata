@@ -23,18 +23,18 @@ public class SellInControlTest {
 	shouldDecreaseSellInInOne() {
 		Item item = anItem().withName("Ordinary item").withSellIn(10).build();
 		
-		sellInControl.updateSellInFor(item);
+		var modifiedItem = sellInControl.updateSellInFor(item);
 		
-		assertThat(item.getSellIn(), is(9));
+		assertThat(modifiedItem.getSellIn(), is(9));
 	}
 
 	@Test public void
 	shouldNotDecreaseSellInForSulfuras() {
 		Item item = anItem().withName(SULFURAS_ITEM_NAME).withSellIn(10).build();
 		
-		sellInControl.updateSellInFor(item);
+		var modifiedItem = sellInControl.updateSellInFor(item);
 		
-		assertThat(item.getSellIn(), is(10));
+		assertThat(modifiedItem.getSellIn(), is(10));
 	}
 	
 }
